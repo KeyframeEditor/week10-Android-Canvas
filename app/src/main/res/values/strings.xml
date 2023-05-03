@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">pertemuan10-debug</string>
+    <!--yang ditambahkan pada project-->
+    <string name="keep_tapping">Keep tapping</string>
+    <string name="done">Done!</string>
+    <!--end-->
+</resources>
