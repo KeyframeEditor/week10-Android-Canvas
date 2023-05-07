@@ -5,8 +5,11 @@ import androidx.core.content.res.ResourcesCompat;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Shader;
 import android.os.Bundle;
@@ -73,7 +76,36 @@ public class MainActivity2 extends AppCompatActivity {
         int halfWidth = vWidth/2;
         int halfHeight = vHeight/2;
 
-        // Define the start and end points of the gradient
+        //Sinewave Background
+        mPaint.setColor(Color.BLACK);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(8);
+
+        Path path = new Path();
+        path.moveTo(0, height / 2f);
+
+        float sineHeight = 12f;
+        float frequency = 2f;
+        float x, y;
+
+        for (int j = 0; j < height; j += 100) {
+            path.moveTo(0, j);
+
+            for (int i = 0; i < width; i += 10) {
+                x = i;
+                y = (float) (j + height / (2 * sineHeight) * Math.sin(2 * Math.PI * frequency * i / (float) width));
+                path.lineTo(x, y);
+            }
+
+            path.lineTo(width, j);
+        }
+
+        mCanvas.drawPath(path, mPaint);
+
+        //reset mPaint to FILL style
+        mPaint.setStyle(Paint.Style.FILL);
+
+        // Center Circle
         float startX = halfWidth/2;
         float startY = halfHeight;
         float endX = halfWidth+halfWidth/2;
@@ -82,6 +114,26 @@ public class MainActivity2 extends AppCompatActivity {
         Shader gradient = new LinearGradient(startX, startY, endX, endY, circle_1_color, null, Shader.TileMode.CLAMP);
         mPaint.setShader(gradient);
         mCanvas.drawCircle(halfWidth, halfHeight, halfWidth/2, mPaint);
+
+        //Upper Left Circle
+        startX = 0;
+        startY = 0;
+        endX = halfWidth;
+        endY = 0;
+
+        gradient = new LinearGradient(startX, startY, endX, endY, circle_2_color, null, Shader.TileMode.CLAMP);
+        mPaint.setShader(gradient);
+        mCanvas.drawCircle(0, 0, halfWidth/2+100, mPaint);
+
+        //Bottom Right Circle
+        startX = width;
+        startY = 0;
+        endX = halfWidth;
+        endY = 0;
+
+        gradient = new LinearGradient(startX, startY, endX, endY, circle_3_color, null, Shader.TileMode.CLAMP);
+        mPaint.setShader(gradient);
+        mCanvas.drawCircle(width, height, halfWidth/2+100, mPaint);
 
         this.mImageView.setImageBitmap(mBitmap);
     }
