@@ -5,10 +5,15 @@ import androidx.core.content.res.ResourcesCompat;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Shader;
+import android.graphics.SweepGradient;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -32,16 +37,25 @@ public class MainActivity extends AppCompatActivity {
     private int mColorRectangle;
     private int mColorColorCircle;
     private int mColorText;
+    private int[] circle_1_color;
+    private int[] circle_2_color;
+    private int[] circle_3_color;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Basic Colors
         mColorBackground = ResourcesCompat.getColor(getResources(), R.color.colorBackground, null);
         mColorRectangle = ResourcesCompat.getColor(getResources(), R.color.colorRectangle, null);
         mColorColorCircle = ResourcesCompat.getColor(getResources(), R.color.colorAccent, null);
         mColorText = ResourcesCompat.getColor(getResources(), R.color.black, null);
+
+        // Gradient Circle Colors
+        circle_1_color = new int[]{ResourcesCompat.getColor(getResources(), R.color.circle_1_start, null), ResourcesCompat.getColor(getResources(), R.color.circle_1_end, null)};
+        circle_2_color = new int[]{ResourcesCompat.getColor(getResources(), R.color.circle_2_start, null), ResourcesCompat.getColor(getResources(), R.color.circle_2_end, null)};
+        circle_3_color = new int[]{ResourcesCompat.getColor(getResources(), R.color.circle_3_start, null), ResourcesCompat.getColor(getResources(), R.color.circle_3_end, null)};
 
         mPaint.setColor(mColorBackground);
         mPaintText.setColor(mColorText);
@@ -104,6 +118,16 @@ public class MainActivity extends AppCompatActivity {
 
                 mCanvas.drawPath(path, mPaint);
                 mOffset += OFFSET;
+
+                // Define the start and end points of the gradient
+                float startX = halfWidth/2;
+                float startY = halfHeight;
+                float endX = halfWidth+halfWidth/2;
+                float endY = halfHeight;
+
+                Shader gradient = new LinearGradient(startX, startY, endX, endY, circle_1_color, null, Shader.TileMode.CLAMP);
+                mPaint.setShader(gradient);
+                mCanvas.drawCircle(halfWidth, halfHeight, halfWidth/2, mPaint);
             }
         }
         v.invalidate();

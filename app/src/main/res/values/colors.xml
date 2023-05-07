@@ -5,4 +5,11 @@
     <color name="colorRectangle">#455564</color>
     <color name="colorBackground">#FFFFD600</color>
     <color name="colorAccent">#FF6200EE</color>
+
+    <color name="circle_1_start">#FE7493</color>
+    <color name="circle_1_end">#FED846</color>
+    <color name="circle_2_start">#19fff4</color>
+    <color name="circle_2_end">#aeffae</color>
+    <color name="circle_3_start">#22dcfd</color>
+    <color name="circle_3_end">#5865b9</color>
 </resources>
